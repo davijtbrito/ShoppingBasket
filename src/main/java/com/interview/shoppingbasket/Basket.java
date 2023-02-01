@@ -22,11 +22,11 @@ public class Basket {
     }
 
     public void consolidateItems() {
-        System.out.println("Before Consolidate: " + this.items.size());                
+        System.out.println("Executing Basket.consolidateItems()");                
         
         this.items = removeDuplicates();                
 
-        System.out.println("After Consolidate: " + this.items.size());
+        System.out.println("Basket consolidated: " + this.items);
     }    
 
     private List<BasketItem> removeDuplicates() {
