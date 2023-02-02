@@ -19,7 +19,7 @@ public class PromotionsServiceImpl implements PromotionsService{
         List<Promotion> listPromotions = new ArrayList<>();
         for (BasketItem item : basket.getItems()){
             
-            Optional<Promotion> optProm = this.promotions.stream().filter(p -> p.getCodeItem().equals(item.getProductCode())).findFirst();
+            Optional<Promotion> optProm = this.promotions.stream().filter(p -> p.getProductCode().equals(item.getProductCode())).findFirst();
             if (optProm.isPresent()){
                 listPromotions.add(optProm.get());
             }            
@@ -29,18 +29,20 @@ public class PromotionsServiceImpl implements PromotionsService{
     }    
 
     public void addPromotion(Promotion promotion){
-        Optional<Promotion> optProm = this.promotions.stream().filter(p -> p.getCodeItem().equals(promotion.getCodeItem())).findAny();
-        if (!optProm.isPresent()){
-            this.promotions.add(optProm.get());
-        }      
+        Optional<Promotion> optProm = this.promotions.stream().filter(p -> p.getProductCode().equals(promotion.getProductCode())).findAny();
+        if (optProm.isPresent()){
+            this.promotions.remove(optProm.get());            
+        }   
+
+        this.promotions.add(promotion);   
     }
 
     public TypePromotion getTypePromotion(String itemCode){
-        Optional<Promotion> type = this.promotions.stream().filter(p -> p.getCodeItem().equals(itemCode)).findFirst();
+        Optional<Promotion> type = this.promotions.stream().filter(p -> p.getProductCode().equals(itemCode)).findFirst();
         if (type.isPresent()){
             return type.get().getTypePromotion();
         }
 
-        return null;
+        return TypePromotion.NONE;
     }
 }

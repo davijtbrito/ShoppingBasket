@@ -1,12 +1,17 @@
 package com.interview.shoppingbasket;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
-@AllArgsConstructor
 @Data
 public class Promotion {
     
-    private String codeItem;
+    private String productCode;
     private TypePromotion typePromotion;
+
+    public Promotion(TypePromotion typePromotion) {        
+        this.typePromotion = typePromotion;
+    }
+
+    public Promotion() {
+    }        
 }
