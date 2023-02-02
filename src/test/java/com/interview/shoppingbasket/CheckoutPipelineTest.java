@@ -34,6 +34,27 @@ public class CheckoutPipelineTest {
     @Test
     void executeAllPassedCheckoutSteps() {
         // Exercise - implement testing passing through all checkout steps
+
+        Basket basket = getDummyBasket();        
+
+        Promotion p = new Promotion("Product 003", TypePromotion.TWO_FOR_ONE);
+        PricingServiceImpl pricingServiceImpl = new PricingServiceImpl();
+        pricingServiceImpl.addPricing(p, basket.getItems().get(2), 1D); 
+
+        RetailPriceCheckoutStep priceCheckoutStep = new RetailPriceCheckoutStep(pricingServiceImpl);
+        priceCheckoutStep.applyPromotion(p, basket.getItems().get(2), 0);
+    }
+
+    private Basket getDummyBasket(){    
+        Basket basket = new Basket();
+        basket.add("001", "Product 001", 1);
+        basket.add("001", "Product 001", 2);
+        basket.add("002", "Product 002", 4);
+        basket.add("003", "Product 003", 5);        
+        basket.add("004", "Product 004", 6);
+        basket.consolidateItems();
+
+        return basket;
     }
 
 }
